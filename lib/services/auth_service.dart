@@ -3,6 +3,7 @@ import 'package:android_final_project/database/models/user_model.dart';
 
 class AuthService {
   final _client = Supabase.instance.client;
+
   // 로그인
   Future<UserModel?> signIn({
     required String email,

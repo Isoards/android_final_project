@@ -30,7 +30,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      home: const UserLoginPage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const UserLoginPage(),
+        //'/home': (context) => const HomePage(), // 일반 사용자용
+        //'/caregiver-home': (context) => const CaregiverHomePage(), // 간병인용
+        //'/register': (context) => const RegisterPage(),
+      },
     );
   }
 }
