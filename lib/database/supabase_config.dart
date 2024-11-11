@@ -1,0 +1,3 @@
+const String supabaseUrl = 'https://renluigefmiiuqjaosgv.supabase.co';
+const String supabaseAnonKey =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJlbmx1aWdlZm1paXVxamFvc2d2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEzMDYyNDYsImV4cCI6MjA0Njg4MjI0Nn0.JuTyh11FjMC-lPkDL0u0oHXulJ3U3jXHYTFhmi9tBdg';
