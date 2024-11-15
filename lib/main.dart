@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:android_final_project/database/supabase_config.dart';
 import 'pages/auth//user_login_page.dart';
+import 'package:android_final_project/pages/home/caregiver_home_page.dart';
+import 'package:android_final_project/pages/home/patient_home_page.dart';
+import 'package:android_final_project/pages/search/caregiver_search_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +24,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -33,8 +35,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const UserLoginPage(),
-        //'/home': (context) => const HomePage(), // 일반 사용자용
-        //'/caregiver-home': (context) => const CaregiverHomePage(), // 간병인용
+        '/patient-home': (context) => const PatientHomePage(), // 일반 사용자용
+        '/caregiver-home': (context) => const CaregiverHomePage(), // 간병인용
+        '/search': (context) => const CaregiverSearch(), // 간병인 찾기
         //'/register': (context) => const RegisterPage(),
       },
     );
