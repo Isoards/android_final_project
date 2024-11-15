@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:android_final_project/services/auth_service.dart';
 
-class CaregiverLoginForm extends StatefulWidget {
-  const CaregiverLoginForm({super.key});
+class UserLoginForm extends StatefulWidget {
+  const UserLoginForm({super.key});
 
   @override
-  State<CaregiverLoginForm> createState() => _CaregiverLoginFormState();
+  State<UserLoginForm> createState() => _UserLoginFormState();
 }
 
-class _CaregiverLoginFormState extends State<CaregiverLoginForm> {
+class _UserLoginFormState extends State<UserLoginForm> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -27,8 +27,8 @@ class _CaregiverLoginFormState extends State<CaregiverLoginForm> {
 
         if (user != null && mounted) {
           debugPrint("로그인 성공");
-          // 간병인 전용 홈 페이지로 이동
-          //Navigator.of(context).pushReplacementNamed('/caregiver-home');
+          // 로그인 성공 시 메인 페이지로 이동
+          Navigator.of(context).pushReplacementNamed('/patient-home');
         }
       } catch (e) {
         if (mounted) {
@@ -47,6 +47,7 @@ class _CaregiverLoginFormState extends State<CaregiverLoginForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -55,6 +56,7 @@ class _CaregiverLoginFormState extends State<CaregiverLoginForm> {
             decoration: const InputDecoration(
               labelText: '아이디',
               hintText: '이메일/아이디를 입력해주세요',
+              border: OutlineInputBorder(),
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -69,10 +71,11 @@ class _CaregiverLoginFormState extends State<CaregiverLoginForm> {
             decoration: const InputDecoration(
               labelText: '패스워드',
               hintText: '비밀번호를 입력해주세요',
+              border: OutlineInputBorder(),
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return '이메일을 입력하세요';
+                return '비밀번호를 입력하세요';
               }
               return null;
             },

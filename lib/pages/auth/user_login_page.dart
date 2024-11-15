@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'user_login_form.dart';
-import 'caregiver_login_form.dart';
+import 'widgets/user_login_form.dart';
+import 'widgets/caregiver_login_form.dart';
 import 'package:android_final_project/pages/register/register_page.dart';
 
 class UserLoginPage extends StatefulWidget {
   const UserLoginPage({super.key});
 
   @override
-  _UserLoginPageState createState() => _UserLoginPageState();
+  State<UserLoginPage> createState() => _UserLoginPageState();
 }
 
 class _UserLoginPageState extends State<UserLoginPage> {

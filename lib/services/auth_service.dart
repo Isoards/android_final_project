@@ -1,5 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:android_final_project/database/models/user_model.dart';
+import 'package:android_final_project/models/user_model.dart';
 
 class AuthService {
   final _client = Supabase.instance.client;
@@ -19,7 +19,6 @@ class AuthService {
         return UserModel(
           id: response.user!.id,
           email: response.user!.email!,
-          // 필요한 경우 추가 정보 조회
         );
       }
       return null;
