@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:android_final_project/database/supabase_config.dart';
-import 'pages/auth//user_login_page.dart';
+import 'pages/auth/login_page.dart';
 import 'package:android_final_project/pages/home/caregiver_home_page.dart';
 import 'package:android_final_project/pages/home/patient_home_page.dart';
 import 'package:android_final_project/pages/search/caregiver_search_page.dart';
+import 'package:android_final_project/pages/auth/signup_page.dart';
+import 'package:android_final_project/pages/auth/signup_success_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,7 +40,8 @@ class MyApp extends StatelessWidget {
         '/patient-home': (context) => const PatientHomePage(), // 일반 사용자용
         '/caregiver-home': (context) => const CaregiverHomePage(), // 간병인용
         '/search': (context) => const CaregiverSearch(), // 간병인 찾기
-        //'/register': (context) => const RegisterPage(),
+        '/signup': (context) => const SignupPage(),
+        '/signup-success': (context) => const SignupSuccessPage(),
       },
     );
   }

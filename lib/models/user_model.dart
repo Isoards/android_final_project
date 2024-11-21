@@ -1,50 +1,43 @@
 class UserModel {
   final String id;
   final String email;
-  final String? username;
-  final DateTime? createdAt;
+  final String name;
+  final String phone;
+  final String gender;
+  final DateTime birthDate;
+  final String userType;
 
   UserModel({
     required this.id,
     required this.email,
-    this.username,
-    this.createdAt,
+    required this.name,
+    required this.phone,
+    required this.gender,
+    required this.birthDate,
+    required this.userType,
   });
 
-  // Supabase JSON 데이터를 UserModel 객체로 변환
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      id: json['id'] ?? '',
-      email: json['email'] ?? '',
-      username: json['username'],
-      createdAt: json['created_at'] != null
-          ? DateTime.parse(json['created_at'])
-          : null,
+      id: json['id'],
+      email: json['email'],
+      name: json['name'],
+      phone: json['phone'],
+      gender: json['gender'],
+      birthDate: DateTime.parse(json['birth_date']),
+      userType: json['user_type'],
     );
   }
 
-  // UserModel 객체를 JSON 형태로 변환
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'email': email,
-      'username': username,
-      'created_at': createdAt?.toIso8601String(),
+      'name': name,
+      'phone': phone,
+      'gender': gender,
+      'birth_date': birthDate.toIso8601String(),
+      'user_type': userType,
     };
-  }
-
-  // 객체 복사본 생성 (상태 업데이트 시 유용)
-  UserModel copyWith({
-    String? id,
-    String? email,
-    String? username,
-    DateTime? createdAt,
-  }) {
-    return UserModel(
-      id: id ?? this.id,
-      email: email ?? this.email,
-      username: username ?? this.username,
-      createdAt: createdAt ?? this.createdAt,
-    );
   }
 }

@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:android_final_project/pages/auth/widgets/signup_form.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
-
-  void _goPatient(BuildContext context) {
-    Navigator.pushNamed(context, '/userSignUp');
-  }
-
-  void _goCaregiver(BuildContext context) {
-    Navigator.pushNamed(context, '/work');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +61,9 @@ class RegisterPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 20),
                             ElevatedButton(
-                              onPressed: () => _goPatient(context),
+                              onPressed: () => {
+                                Navigator.pushNamed((context), '/signup'),
+                              },
                               style: ElevatedButton.styleFrom(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 32,
@@ -106,7 +101,9 @@ class RegisterPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 20),
                             ElevatedButton(
-                              onPressed: () => _goCaregiver(context),
+                              onPressed: () => {
+                                Navigator.pushNamed((context), '/signup'),
+                              },
                               style: ElevatedButton.styleFrom(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 32,
