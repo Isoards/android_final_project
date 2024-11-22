@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CaregiverFormData {
+class PatientCareData {
   String? patientName;
   String? patientBirthDate;
   int? patientHeight;
@@ -49,7 +49,7 @@ class CaregiverFormData {
   }
 
   // Map에서 데이터를 불러오는 생성자
-  CaregiverFormData.fromJson(Map<String, dynamic> json) {
+  PatientCareData.fromJson(Map<String, dynamic> json) {
     patientName = json['patientName'];
     patientBirthDate = json['patientBirthDate'];
     patientHeight = json['patientHeight'];
@@ -74,7 +74,7 @@ class CaregiverFormData {
   }
 
   // 기본 생성자
-  CaregiverFormData();
+  PatientCareData();
 
   // 데이터 검증 메서드
   bool isPatientFormValid() {
@@ -102,7 +102,7 @@ class CaregiverFormData {
   @override
   String toString() {
     return '''
-CaregiverFormData:
+PatientCareData:
   환자 정보:
     - 이름: $patientName
     - 생년월일: $patientBirthDate

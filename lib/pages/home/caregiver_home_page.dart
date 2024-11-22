@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:android_final_project/pages/mypage/mypage_page.dart'; // MyPage import 추가
 
 class CaregiverHomePage extends StatefulWidget {
   const CaregiverHomePage({super.key});
@@ -8,46 +9,38 @@ class CaregiverHomePage extends StatefulWidget {
 }
 
 class _CaregiverHomePageState extends State<CaregiverHomePage> {
-  // 선택된 인덱스를 추적하기 위한 상태 변수
   int _selectedIndex = 0;
 
-  // 탭 선택 시 호출될 함수
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('간병인 앱'),
-      ),
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Card(
-                elevation: 4,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        '내 경력을 바탕으로 \n전문 간병인이 되어보세요!',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
+  // 탭에 따라 보여줄 화면 목록
+  final List<Widget> _pages = [
+    // 일감 찾기 화면
+    Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Card(
+              elevation: 4,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      '내 경력을 바탕으로 \n전문 간병인이 되어보세요!',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
                       ),
-                      const SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () {},
+                    ),
+                    const SizedBox(height: 20),
+                    Builder(
+                      builder: (context) => ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/work');
+                        },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 32,
@@ -60,22 +53,40 @@ class _CaregiverHomePageState extends State<CaregiverHomePage> {
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
+    ),
+    // 마이페이지 화면
+    const MyPage(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(_selectedIndex == 0 ? '간병인 앱' : '마이페이지'),
+      ),
+      body: _pages[_selectedIndex], // 선택된 인덱스에 따라 화면 전환
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            label: '간병인 찾기',
+            label: '일감 찾기',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.person),
             label: '마이 페이지',
           )
         ],

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class StepIndicator extends StatelessWidget {
   final int currentStep;
-
   const StepIndicator({super.key, required this.currentStep});
 
   @override

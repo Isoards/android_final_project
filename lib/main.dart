@@ -7,6 +7,7 @@ import 'package:android_final_project/pages/home/patient_home_page.dart';
 import 'package:android_final_project/pages/search/caregiver_search_page.dart';
 import 'package:android_final_project/pages/auth/signup_page.dart';
 import 'package:android_final_project/pages/auth/signup_success_page.dart';
+import 'package:android_final_project/pages/work/work_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,12 +37,13 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const UserLoginPage(),
-        '/patient-home': (context) => const PatientHomePage(), // 일반 사용자용
-        '/caregiver-home': (context) => const CaregiverHomePage(), // 간병인용
+        '/': (context) => const UserLoginPage(), // 로그인
+        '/patient-home': (context) => const PatientHomePage(), // 환자/보호자
+        '/caregiver-home': (context) => const CaregiverHomePage(), // 간병인
         '/search': (context) => const CaregiverSearch(), // 간병인 찾기
-        '/signup': (context) => const SignupPage(),
-        '/signup-success': (context) => const SignupSuccessPage(),
+        '/signup': (context) => const SignupPage(), // 회원가입
+        '/signup-success': (context) => const SignupSuccessPage(), // 회원가입 성공
+        '/work': (context) => const WorkPage(), // 일감 찾기
       },
     );
   }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:android_final_project/models/caregiver_form_data.dart';
+import 'package:android_final_project/models/patient_care_model.dart';
 
 class GuardianInfoForm extends StatefulWidget {
-  final CaregiverFormData formData;
+  final PatientCareData formData;
   final VoidCallback onPrevious;
   final VoidCallback onSubmit;
 

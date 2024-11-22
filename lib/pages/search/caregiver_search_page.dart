@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:android_final_project/models/caregiver_form_data.dart';
-import 'package:android_final_project/pages/search/widgets/patient_form.dart';
-import 'package:android_final_project/pages/search/step_indicator.dart';
-import 'package:android_final_project/pages/search/widgets/care_info_form.dart';
-import 'package:android_final_project/pages/search/widgets/patient_symptoms_form.dart';
-import 'package:android_final_project/pages/search/widgets/guardian_info_form.dart';
+import 'package:android_final_project/models/patient_care_model.dart';
+import 'package:android_final_project/widgets/search/patient_form.dart';
+import 'package:android_final_project/widgets/common/step_indicator.dart';
+import 'package:android_final_project/widgets/search/care_info_form.dart';
+import 'package:android_final_project/widgets/search/patient_symptoms_form.dart';
+import 'package:android_final_project/widgets/search/guardian_info_form.dart';
 
 class CaregiverSearch extends StatefulWidget {
   const CaregiverSearch({super.key});
@@ -18,7 +18,7 @@ class _CaregiverSearchState extends State<CaregiverSearch> {
   final int maxSteps = 3;
 
   // Form data
-  final formData = CaregiverFormData();
+  final formData = PatientCareData();
 
   void handleNext() {
     if (currentStep < maxSteps) {

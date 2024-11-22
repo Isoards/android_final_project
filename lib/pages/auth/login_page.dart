@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'widgets/user_login_form.dart';
-import 'widgets/caregiver_login_form.dart';
-import 'package:android_final_project/pages/register/register_page.dart';
+import '../../widgets/auth/user_login_form.dart';
+import '../../widgets/auth/caregiver_login_form.dart';
+import 'package:android_final_project/widgets/auth/register_form.dart';
 
 class UserLoginPage extends StatefulWidget {
   const UserLoginPage({super.key});

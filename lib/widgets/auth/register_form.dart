@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:android_final_project/pages/auth/widgets/signup_form.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});

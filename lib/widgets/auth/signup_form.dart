@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:android_final_project/services/auth_service.dart';
 
 class SignupForm extends StatefulWidget {
-  const SignupForm({Key? key}) : super(key: key);
+  const SignupForm({super.key});
 
   @override
   State<SignupForm> createState() => _SignupFormState();
