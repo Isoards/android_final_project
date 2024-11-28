@@ -68,6 +68,8 @@ class _PatientSymptomsFormState extends State<PatientSymptomsForm> {
                         onSelected: (bool selected) {
                           setState(() {
                             symptoms[symptom] = selected;
+                            // formData의 symptoms 맵에도 상태 업데이트
+                            widget.formData.symptoms[symptom] = selected;
                           });
                         },
                       );
@@ -87,6 +89,9 @@ class _PatientSymptomsFormState extends State<PatientSymptomsForm> {
               border: OutlineInputBorder(),
             ),
             maxLines: 3,
+            onChanged: (value) {
+              widget.formData.specialNotes = value;
+            },
           ),
 
           const SizedBox(height: 24),
@@ -105,6 +110,20 @@ class _PatientSymptomsFormState extends State<PatientSymptomsForm> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+                      // 현재 symptoms 상태를 formData에 저장
+                      widget.formData.symptoms.clear();
+                      widget.formData.symptoms.addAll(symptoms);
+
+                      // 디버깅을 위한 출력
+                      debugPrint('Selected Symptoms:');
+                      widget.formData.symptoms.forEach((symptom, isSelected) {
+                        if (isSelected) {
+                          debugPrint('- $symptom');
+                        }
+                      });
+                      debugPrint(
+                          'Special Notes: ${widget.formData.specialNotes}');
+
                       widget.onNext();
                     }
                   },
@@ -116,5 +135,14 @@ class _PatientSymptomsFormState extends State<PatientSymptomsForm> {
         ],
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // 이전에 선택된 증상이 있다면 불러오기
+    if (widget.formData.symptoms.isNotEmpty) {
+      symptoms.addAll(widget.formData.symptoms);
+    }
   }
 }

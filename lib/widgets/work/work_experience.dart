@@ -9,11 +9,11 @@ class WorkExperienceForm extends StatefulWidget {
   final VoidCallback onSubmit;
 
   const WorkExperienceForm({
-    Key? key,
+    super.key,
     required this.formData,
     required this.onPrevious,
     required this.onSubmit,
-  }) : super(key: key);
+  });
 
   @override
   State<WorkExperienceForm> createState() => _WorkExperienceFormState();

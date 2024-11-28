@@ -19,7 +19,8 @@ class CareInfoForm extends StatefulWidget {
 
 class _CareInfoFormState extends State<CareInfoForm> {
   final _formKey = GlobalKey<FormState>();
-  bool showDiseaseModal = false;
+  TimeOfDay? _startTime;
+  TimeOfDay? _endTime;
 
   @override
   Widget build(BuildContext context) {
@@ -37,25 +38,14 @@ class _CareInfoFormState extends State<CareInfoForm> {
               hintText: '진단명을 입력해주세요',
               border: OutlineInputBorder(),
             ),
-            onTap: () {
-              // TODO: Implement disease selection modal
-              setState(() {
-                showDiseaseModal = true;
-              });
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return '진단명을 입력해주세요';
+              }
+              return null;
             },
-            readOnly: true,
-            controller:
-                TextEditingController(text: widget.formData.diseaseName),
-          ),
-          CheckboxListTile(
-            title: const Text('현재 진단명이 없습니다'),
-            value: widget.formData.diseaseName?.isEmpty ?? false,
-            onChanged: (bool? value) {
-              setState(() {
-                if (value == true) {
-                  widget.formData.diseaseName = '';
-                }
-              });
+            onSaved: (value) {
+              widget.formData.diseaseName = value;
             },
           ),
           const SizedBox(height: 16),
@@ -65,9 +55,14 @@ class _CareInfoFormState extends State<CareInfoForm> {
               hintText: '주소를 입력해주세요',
               border: OutlineInputBorder(),
             ),
-            readOnly: true,
-            onTap: () {
-              // TODO: Implement address selection
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return '간병 장소를 입력해주세요';
+              }
+              return null;
+            },
+            onSaved: (value) {
+              widget.formData.reservationLocation = value;
             },
           ),
           const SizedBox(height: 8),
@@ -142,6 +137,80 @@ class _CareInfoFormState extends State<CareInfoForm> {
             ],
           ),
           const SizedBox(height: 16),
+          const Text('간병 시간 *'),
+          Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: '시작 시간',
+                    hintText: '시작 시간 선택',
+                    border: OutlineInputBorder(),
+                  ),
+                  readOnly: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '시작 시간을 선택해주세요';
+                    }
+                    return null;
+                  },
+                  onTap: () async {
+                    final time = await showTimePicker(
+                      context: context,
+                      initialTime: _startTime ?? TimeOfDay.now(),
+                    );
+                    if (time != null) {
+                      setState(() {
+                        _startTime = time;
+                        widget.formData.dailyStartTime =
+                            '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
+                      });
+                    }
+                  },
+                  controller: TextEditingController(
+                    text: _startTime?.format(context) ?? '',
+                  ),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text('~'),
+              ),
+              Expanded(
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: '종료 시간',
+                    hintText: '종료 시간 선택',
+                    border: OutlineInputBorder(),
+                  ),
+                  readOnly: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '종료 시간을 선택해주세요';
+                    }
+                    return null;
+                  },
+                  onTap: () async {
+                    final time = await showTimePicker(
+                      context: context,
+                      initialTime: _endTime ?? TimeOfDay.now(),
+                    );
+                    if (time != null) {
+                      setState(() {
+                        _endTime = time;
+                        widget.formData.dailyEndTime =
+                            '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
+                      });
+                    }
+                  },
+                  controller: TextEditingController(
+                    text: _endTime?.format(context) ?? '',
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
           CheckboxListTile(
             title: const Text('주말 포함'),
             value: widget.formData.includeWeekends,
@@ -165,7 +234,8 @@ class _CareInfoFormState extends State<CareInfoForm> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      widget.formData.printCareInfo(); // 간병 정보만 확인
+                      _formKey.currentState!.save(); // onSaved 콜백 호출
+                      widget.formData.printCareInfo(); // 간병 정보 확인
                       widget.onNext();
                     }
                   },

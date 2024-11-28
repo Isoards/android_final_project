@@ -9,11 +9,11 @@ class BasicInfoForm extends StatelessWidget {
   final VoidCallback onPrevious;
 
   const BasicInfoForm({
-    Key? key,
+    super.key,
     required this.formData,
     required this.onNext,
     required this.onPrevious,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

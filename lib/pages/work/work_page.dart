@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:android_final_project/models/caregiver_profile_model.dart';
 import 'package:android_final_project/widgets/work/basic_info_form.dart';
 import 'package:android_final_project/widgets/work/work_experience.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 //import 'package:android_final_project/widgets/common/step_indicator.dart';
 
 class WorkPage extends StatefulWidget {
@@ -30,7 +31,34 @@ class _WorkPageState extends State<WorkPage> {
   void handleSubmit() {
     debugPrint(formData.toString());
   }
-// lib/pages/signup/caregiver_signup_page.dart (나머지 부분)
+
+  Future<void> handleSubmit2() async {
+    try {
+      final supabase = Supabase.instance.client;
+      final user = supabase.auth.currentUser;
+
+      if (user == null) {
+        throw Exception('User not logged in');
+      }
+
+      await formData.saveToSupabase(supabase, user.id);
+
+      // 성공 메시지 표시
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('프로필이 성공적으로 저장되었습니다.')),
+        );
+        // 홈 화면으로 이동
+        Navigator.of(context).pushReplacementNamed('/caregiver-home');
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('저장 중 오류가 발생했습니다: $e')),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +119,7 @@ class _WorkPageState extends State<WorkPage> {
         return WorkExperienceForm(
           formData: formData,
           onPrevious: handlePrevious,
-          onSubmit: handleSubmit,
+          onSubmit: handleSubmit2,
         );
       default:
         return Container();

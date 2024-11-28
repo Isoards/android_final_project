@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class PatientCareData {
   String? patientName;
@@ -170,5 +171,78 @@ PatientCareData:
 상세 주소: $guardianAddressDetail
 ======================
     ''');
+  }
+
+  Future<void> saveToSupabase(
+      SupabaseClient supabase, String guardianId) async {
+    try {
+      // 환자 정보 저장
+      final patientResponse = await supabase
+          .from('patients')
+          .insert({
+            'guardian_id': guardianId,
+            'patient_name': patientName,
+            'patient_birth_date': patientBirthDate,
+            'patient_height': patientHeight,
+            'patient_weight': patientWeight,
+            'patient_gender': patientGender,
+          })
+          .select('id')
+          .single();
+
+      final patientId = patientResponse['id'];
+
+      // 보호자 상세 정보 저장
+      await supabase.from('guardian_details').upsert({
+        'user_id': guardianId,
+        'address': guardianAddress,
+        'address_detail': guardianAddressDetail,
+      });
+
+      // 보호자 추가 연락처 저장
+      for (String phone in guardianPhones) {
+        await supabase.from('guardian_additional_phones').insert({
+          'guardian_id': guardianId,
+          'phone_number': phone,
+          'is_primary': guardianPhones.indexOf(phone) == 0,
+        });
+      }
+
+      // 간병 요청 정보 저장
+      final careRequestResponse = await supabase
+          .from('care_requests')
+          .insert({
+            'patient_id': patientId,
+            'disease_name': diseaseName,
+            'reservation_location': reservationLocation,
+            'location_detail': locationDetail,
+            'start_date': startDate?.toIso8601String(),
+            'end_date': endDate?.toIso8601String(),
+            'daily_start_time': dailyStartTime,
+            'daily_end_time': dailyEndTime,
+            'include_weekends': includeWeekends,
+            'special_notes': specialNotes,
+            'status': 'pending'
+          })
+          .select('id')
+          .single();
+
+      final careRequestId = careRequestResponse['id'];
+
+      // 증상 정보 저장
+      for (var entry in symptoms.entries) {
+        if (entry.value) {
+          // true인 증상만 저장
+          await supabase.from('symptoms').insert({
+            'care_request_id': careRequestId,
+            'symptom_name': entry.key,
+            'is_present': true,
+          });
+        }
+      }
+    } catch (e) {
+      debugPrint('Error saving patient care data: $e');
+      rethrow;
+    }
   }
 }

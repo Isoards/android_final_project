@@ -147,10 +147,7 @@ class _GuardianInfoFormState extends State<GuardianInfoForm> {
               hintText: '주소를 입력해주세요',
               border: OutlineInputBorder(),
             ),
-            readOnly: true,
-            onTap: () {
-              // TODO: Implement address selection
-            },
+            onChanged: (value) => widget.formData.guardianAddress = value,
           ),
           const SizedBox(height: 8),
           TextFormField(

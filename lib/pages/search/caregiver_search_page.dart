@@ -5,6 +5,7 @@ import 'package:android_final_project/widgets/common/step_indicator.dart';
 import 'package:android_final_project/widgets/search/care_info_form.dart';
 import 'package:android_final_project/widgets/search/patient_symptoms_form.dart';
 import 'package:android_final_project/widgets/search/guardian_info_form.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CaregiverSearch extends StatefulWidget {
   const CaregiverSearch({super.key});
@@ -33,6 +34,34 @@ class _CaregiverSearchState extends State<CaregiverSearch> {
       setState(() {
         currentStep--;
       });
+    }
+  }
+
+  Future<void> handleSubmit() async {
+    try {
+      final supabase = Supabase.instance.client;
+      final user = supabase.auth.currentUser;
+
+      if (user == null) {
+        throw Exception('User not logged in');
+      }
+
+      await formData.saveToSupabase(supabase, user.id);
+
+      // 성공 메시지 표시
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('간병인 요청이 성공적으로 등록되었습니다.')),
+        );
+        // 홈 화면으로 이동
+        Navigator.of(context).pushReplacementNamed('/patient-home');
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('저장 중 오류가 발생했습니다: $e')),
+        );
+      }
     }
   }
 
@@ -84,12 +113,9 @@ class _CaregiverSearchState extends State<CaregiverSearch> {
         );
       case 3:
         return GuardianInfoForm(
-          formData: formData,
-          onPrevious: handlePrevious,
-          onSubmit: () {
-            debugPrint(formData.toString());
-          },
-        );
+            formData: formData,
+            onPrevious: handlePrevious,
+            onSubmit: handleSubmit);
       default:
         return Container();
     }

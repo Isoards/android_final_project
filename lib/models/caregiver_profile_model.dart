@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CaregiverProfileData {
   // 회원가입 기본 정보
@@ -128,6 +129,31 @@ CaregiverProfileData:
 자기소개: $careerDescription
 ======================
     ''');
+  }
+
+  Future<void> saveToSupabase(SupabaseClient supabase, String userId) async {
+    try {
+      // caregiver_profiles 테이블에 데이터 저장
+      await supabase.from('caregiver_profiles').upsert({
+        'user_id': userId,
+        'nationality': nationality,
+        'certification': certification,
+        'career_description': careerDescription,
+      });
+
+      // work_histories 테이블에 경력 데이터 저장
+      for (var history in workHistories) {
+        await supabase.from('work_histories').insert({
+          'caregiver_id': userId,
+          'work_place': history.workPlace,
+          'start_date': history.startDate,
+          'end_date': history.endDate,
+        });
+      }
+    } catch (e) {
+      debugPrint('Error saving caregiver profile: $e');
+      rethrow;
+    }
   }
 }
 
