@@ -69,9 +69,11 @@ class _CaregiverLoginFormState extends State<CaregiverLoginForm> {
             decoration: const InputDecoration(
               labelText: '아이디',
               hintText: '이메일/아이디를 입력해주세요',
+              border: OutlineInputBorder(), // 테두리 추가
               prefixIcon: Icon(Icons.email), // 아이콘 추가
             ),
             keyboardType: TextInputType.emailAddress, // 이메일 키보드 타입
+
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return '이메일을 입력하세요';
@@ -88,6 +90,7 @@ class _CaregiverLoginFormState extends State<CaregiverLoginForm> {
             decoration: const InputDecoration(
               labelText: '패스워드',
               hintText: '비밀번호를 입력해주세요',
+              border: OutlineInputBorder(), // 테두리 추가
               prefixIcon: Icon(Icons.lock), // 아이콘 추가
             ),
             validator: (value) {

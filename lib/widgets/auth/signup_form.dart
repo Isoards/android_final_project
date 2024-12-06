@@ -113,7 +113,8 @@ class _SignupFormState extends State<SignupForm> {
                           ? Theme.of(context).primaryColor
                           : Colors.grey[300],
                     ),
-                    child: const Text('환자/보호자'),
+                    child: const Text('환자/보호자',
+                        style: TextStyle(color: Colors.white)),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -125,7 +126,10 @@ class _SignupFormState extends State<SignupForm> {
                           ? Theme.of(context).primaryColor
                           : Colors.grey[300],
                     ),
-                    child: const Text('간병인'),
+                    child: const Text(
+                      '간병인',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               ],
@@ -247,7 +251,8 @@ class _SignupFormState extends State<SignupForm> {
                           ? Theme.of(context).primaryColor
                           : Colors.grey[300],
                     ),
-                    child: const Text('남성'),
+                    child:
+                        const Text('남성', style: TextStyle(color: Colors.white)),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -259,7 +264,8 @@ class _SignupFormState extends State<SignupForm> {
                           ? Theme.of(context).primaryColor
                           : Colors.grey[300],
                     ),
-                    child: const Text('여성'),
+                    child:
+                        const Text('여성', style: TextStyle(color: Colors.white)),
                   ),
                 ),
               ],

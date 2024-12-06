@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:android_final_project/database/supabase_config.dart';
+import 'package:android_final_project/services/supabase_config.dart';
 import 'pages/auth/login_page.dart';
 import 'package:android_final_project/pages/home/caregiver_home_page.dart';
 import 'package:android_final_project/pages/home/patient_home_page.dart';

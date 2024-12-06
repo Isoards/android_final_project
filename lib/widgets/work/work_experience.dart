@@ -1,5 +1,3 @@
-// lib/pages/signup/work_experience_form.dart
-
 import 'package:flutter/material.dart';
 import 'package:android_final_project/models/caregiver_profile_model.dart';
 
@@ -24,7 +22,6 @@ class _WorkExperienceFormState extends State<WorkExperienceForm> {
     '요양보호사 자격증',
     '간호조무사 자격증',
     '사회복지사 자격증',
-    // 추가 자격증...
   ];
 
   @override
@@ -115,28 +112,20 @@ class _WorkExperienceFormState extends State<WorkExperienceForm> {
                                 widget.formData.workHistories[index].startDate,
                             decoration: const InputDecoration(
                               labelText: '시작일',
+                              hintText: 'YYYY-MM-DD',
                               border: OutlineInputBorder(),
                             ),
-                            readOnly: true,
-                            onTap: () async {
-                              final date = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1900),
-                                lastDate: DateTime.now(),
-                              );
-                              if (date != null) {
-                                setState(() {
-                                  widget.formData.workHistories[index] =
-                                      WorkHistory(
-                                    workPlace: widget.formData
-                                        .workHistories[index].workPlace,
-                                    startDate: date.toString().split(' ')[0],
-                                    endDate: widget
-                                        .formData.workHistories[index].endDate,
-                                  );
-                                });
-                              }
+                            onChanged: (value) {
+                              setState(() {
+                                widget.formData.workHistories[index] =
+                                    WorkHistory(
+                                  workPlace: widget
+                                      .formData.workHistories[index].workPlace,
+                                  startDate: value,
+                                  endDate: widget
+                                      .formData.workHistories[index].endDate,
+                                );
+                              });
                             },
                           ),
                         ),
@@ -149,28 +138,20 @@ class _WorkExperienceFormState extends State<WorkExperienceForm> {
                                 widget.formData.workHistories[index].endDate,
                             decoration: const InputDecoration(
                               labelText: '종료일',
+                              hintText: 'YYYY-MM-DD',
                               border: OutlineInputBorder(),
                             ),
-                            readOnly: true,
-                            onTap: () async {
-                              final date = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1900),
-                                lastDate: DateTime.now(),
-                              );
-                              if (date != null) {
-                                setState(() {
-                                  widget.formData.workHistories[index] =
-                                      WorkHistory(
-                                    workPlace: widget.formData
-                                        .workHistories[index].workPlace,
-                                    startDate: widget.formData
-                                        .workHistories[index].startDate,
-                                    endDate: date.toString().split(' ')[0],
-                                  );
-                                });
-                              }
+                            onChanged: (value) {
+                              setState(() {
+                                widget.formData.workHistories[index] =
+                                    WorkHistory(
+                                  workPlace: widget
+                                      .formData.workHistories[index].workPlace,
+                                  startDate: widget
+                                      .formData.workHistories[index].startDate,
+                                  endDate: value,
+                                );
+                              });
                             },
                           ),
                         ),

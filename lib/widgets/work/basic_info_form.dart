@@ -1,20 +1,21 @@
-// lib/pages/signup/personal_info_form.dart
-
 import 'package:flutter/material.dart';
 import 'package:android_final_project/models/caregiver_profile_model.dart';
 
-class BasicInfoForm extends StatelessWidget {
+class BasicInfoForm extends StatefulWidget {
   final CaregiverProfileData formData;
   final VoidCallback onNext;
-  final VoidCallback onPrevious;
 
   const BasicInfoForm({
     super.key,
     required this.formData,
     required this.onNext,
-    required this.onPrevious,
   });
 
+  @override
+  State<BasicInfoForm> createState() => _BasicInfoFormState();
+}
+
+class _BasicInfoFormState extends State<BasicInfoForm> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,34 +30,27 @@ class BasicInfoForm extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         TextFormField(
-          initialValue: formData.name,
+          initialValue: widget.formData.name,
           decoration: const InputDecoration(
             labelText: '이름*',
             hintText: '홍길동',
             border: OutlineInputBorder(),
           ),
-          onChanged: (value) => formData.name = value,
+          onChanged: (value) => setState(() {
+            widget.formData.name = value;
+          }),
         ),
         const SizedBox(height: 16),
         TextFormField(
-          initialValue: formData.birthDate,
+          initialValue: widget.formData.birthDate,
           decoration: const InputDecoration(
             labelText: '생년월일*',
             hintText: 'YYYY-MM-DD',
             border: OutlineInputBorder(),
           ),
-          onTap: () async {
-            final date = await showDatePicker(
-              context: context,
-              initialDate: DateTime.now(),
-              firstDate: DateTime(1900),
-              lastDate: DateTime.now(),
-            );
-            if (date != null) {
-              formData.birthDate = date.toString().split(' ')[0];
-            }
-          },
-          readOnly: true,
+          onChanged: (value) => setState(() {
+            widget.formData.birthDate = value;
+          }),
         ),
         const SizedBox(height: 16),
         const Text('성별*'),
@@ -66,21 +60,28 @@ class BasicInfoForm extends StatelessWidget {
               child: RadioListTile<String>(
                 title: const Text('남성'),
                 value: '남성',
-                groupValue: formData.gender,
-                onChanged: (value) => formData.gender = value,
+                groupValue: widget.formData.gender,
+                onChanged: (value) {
+                  setState(() {
+                    widget.formData.gender = value;
+                  });
+                },
               ),
             ),
             Expanded(
               child: RadioListTile<String>(
                 title: const Text('여성'),
                 value: '여성',
-                groupValue: formData.gender,
-                onChanged: (value) => formData.gender = value,
+                groupValue: widget.formData.gender,
+                onChanged: (value) {
+                  setState(() {
+                    widget.formData.gender = value;
+                  });
+                },
               ),
             ),
           ],
         ),
-        const SizedBox(height: 16),
         const Text('내/외국인*'),
         Row(
           children: [
@@ -88,32 +89,36 @@ class BasicInfoForm extends StatelessWidget {
               child: RadioListTile<String>(
                 title: const Text('내국인'),
                 value: '내국인',
-                groupValue: formData.nationality,
-                onChanged: (value) => formData.nationality = value,
+                groupValue: widget.formData.nationality,
+                onChanged: (value) {
+                  setState(() {
+                    widget.formData.nationality = value;
+                  });
+                },
               ),
             ),
             Expanded(
               child: RadioListTile<String>(
                 title: const Text('외국인'),
                 value: '외국인',
-                groupValue: formData.nationality,
-                onChanged: (value) => formData.nationality = value,
+                groupValue: widget.formData.nationality,
+                onChanged: (value) {
+                  setState(() {
+                    widget.formData.nationality = value;
+                  });
+                },
               ),
             ),
           ],
         ),
         const SizedBox(height: 24),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            TextButton(
-              onPressed: onPrevious,
-              child: const Text('이전'),
-            ),
             ElevatedButton(
               onPressed: () {
-                if (formData.isPersonalInfoValid()) {
-                  onNext();
+                if (widget.formData.isPersonalInfoValid()) {
+                  widget.onNext();
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('모든 필수 항목을 입력해주세요.')),

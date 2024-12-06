@@ -138,6 +138,7 @@ class _CareInfoFormState extends State<CareInfoForm> {
           ),
           const SizedBox(height: 16),
           const Text('간병 시간 *'),
+          const SizedBox(height: 10),
           Row(
             children: [
               Expanded(

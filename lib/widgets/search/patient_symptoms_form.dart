@@ -44,7 +44,6 @@ class _PatientSymptomsFormState extends State<PatientSymptomsForm> {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
-
           // 환자 상태 체크리스트
           Card(
             elevation: 2,

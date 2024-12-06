@@ -87,7 +87,7 @@ class _PatientFormState extends State<PatientForm> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: widget.formData.patientGender == '남성'
-                        ? Colors.blue
+                        ? Colors.deepPurple
                         : Colors.grey[300],
                   ),
                   onPressed: () {
@@ -95,7 +95,8 @@ class _PatientFormState extends State<PatientForm> {
                       widget.formData.patientGender = '남성';
                     });
                   },
-                  child: const Text('남성'),
+                  child:
+                      const Text('남성', style: TextStyle(color: Colors.white)),
                 ),
               ),
               const SizedBox(width: 16),
@@ -103,7 +104,7 @@ class _PatientFormState extends State<PatientForm> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: widget.formData.patientGender == '여성'
-                        ? Colors.blue
+                        ? Colors.deepPurple
                         : Colors.grey[300],
                   ),
                   onPressed: () {
@@ -111,7 +112,8 @@ class _PatientFormState extends State<PatientForm> {
                       widget.formData.patientGender = '여성';
                     });
                   },
-                  child: const Text('여성'),
+                  child:
+                      const Text('여성', style: TextStyle(color: Colors.white)),
                 ),
               ),
             ],
