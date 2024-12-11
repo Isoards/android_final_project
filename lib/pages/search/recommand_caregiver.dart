@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class RecommendedCaregiverList extends StatefulWidget {
-  const RecommendedCaregiverList({Key? key}) : super(key: key);
+  const RecommendedCaregiverList({super.key});
 
   @override
   State<RecommendedCaregiverList> createState() =>

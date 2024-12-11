@@ -6,6 +6,9 @@ import 'package:android_final_project/widgets/mypage/matching_info.dart';
 import 'package:android_final_project/services/care_matching_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:android_final_project/widgets/mypage/care_request.dart';
+import 'package:android_final_project/widgets/mypage/review.dart';
+import 'package:android_final_project/models/review_model.dart';
+import 'package:android_final_project/services/review_service.dart';
 
 class MyPage extends StatefulWidget {
   const MyPage({super.key});
@@ -68,13 +71,6 @@ class _MyPageState extends State<MyPage> {
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.grey,
-                    ),
-                    child: const Text('회원탈퇴'),
                   ),
                 ],
               ),
@@ -164,6 +160,8 @@ class _MyPageState extends State<MyPage> {
               else
                 const Center(child: Text('매칭 정보가 없습니다.')),
               const SizedBox(height: 20),
+              _buildReviewsSection(),
+              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -211,6 +209,92 @@ class _MyPageState extends State<MyPage> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildReviewsSection() {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  '리뷰',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => ReviewDialog(
+                        targetId: userData!.id,
+                        onReviewSubmitted: () {
+                          setState(() {
+                            // Refresh reviews
+                          });
+                        },
+                      ),
+                    );
+                  },
+                  child: const Text('리뷰 작성'),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            FutureBuilder<List<ReviewModel>>(
+              future: ReviewService(Supabase.instance.client)
+                  .getReviewsForUser(userData!.id),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Center(child: Text('아직 리뷰가 없습니다.'));
+                }
+
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    final review = snapshot.data![index];
+                    return ListTile(
+                      title: Row(
+                        children: [
+                          ...List.generate(
+                            5,
+                            (i) => Icon(
+                              i < review.rating
+                                  ? Icons.star
+                                  : Icons.star_border,
+                              color: Colors.amber,
+                              size: 16,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            review.createdAt.toString().split(' ')[0],
+                            style: const TextStyle(fontSize: 12),
+                          ),
+                        ],
+                      ),
+                      subtitle: Text(review.content),
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

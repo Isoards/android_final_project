@@ -158,7 +158,7 @@ class _CareMatchingCardState extends State<CareMatchingCard> {
                         // 질병 및 증상 정보
                         _buildSection('질병 및 증상', [
                           '질병명: ${widget.careData.diseaseName}',
-                          ...widget.careData.symptoms?.entries.map((e) =>
+                          ...widget.careData.symptoms.entries.map((e) =>
                                   '${e.key}: ${e.value ? "있음" : "없음"}') ??
                               [],
                         ]),
